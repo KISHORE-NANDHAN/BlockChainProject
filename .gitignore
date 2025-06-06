@@ -1,0 +1,21 @@
+# Ignore logs, configs, and helper scripts
+log.txt
+monitordocker.sh
+network.config
+setOrgEnv.sh
+CHAINCODE_AS_A_SERVICE_TUTORIAL.md
+
+# Ignore generated artifacts and orgs (optional if regenerating)
+system-genesis-block/
+peerOrganizations/
+ordererOrganizations/
+channel-artifacts/
+
+# Ignore optional tutorials and folders
+addOrg3/
+prometheus-grafana/
+bft-config/
+
+# Ignore Docker/Grafana/Monitoring generated DBs
+*.db
+
