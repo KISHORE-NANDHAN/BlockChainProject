@@ -1,0 +1,166 @@
+{% extends "base_official_dashboard.html" %}
+
+{% block css %}
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #fafafa;
+    margin: 0;
+    padding: 0;
+  }
+  .file-create-container {
+    max-width: 600px;
+    margin: 30px auto;
+    background-color: #ffeef4; /* Pink-ish background */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 20px;
+  }
+  .file-create-container h2 {
+    text-align: center;
+    color: #7a003c;
+    margin-bottom: 15px;
+  }
+  .form-section {
+    background-color: #fdf6f8;
+    border: 1px solid #e9d3da;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  .form-group {
+    margin-bottom: 10px;
+  }
+  .form-group label {
+    font-weight: bold;
+    color: #444;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .continue-button {
+    background-color: #d82b70;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 0 auto;
+    display: block;
+  }
+  .continue-button:hover {
+    background-color: #b1235c;
+  }
+{% endblock %}
+
+{% block content %}
+<div class="file-create-container">
+  <h2>Review & Forward File</h2>
+  <form id="fileReviewForm" method="post" action="{% url 'file_create' %}">
+    {% csrf_token %}
+
+    <!-- Hidden Field for User Role -->
+    <input type="hidden" name="user_role" value="{{ request.user.designation }}">
+
+    <!-- File No. Dropdown -->
+    <div class="form-group">
+      <label for="fileNo"><strong>Select File No.:</strong></label>
+      <select name="fileNo" id="fileNo" required>
+        <option value="">--Select a File No--</option>
+        {% for fno in file_numbers %}
+          <option value="{{ fno.pk }}">{{ fno.receipt_number }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Auto-Populated File Details (Read-Only) -->
+    <div id="fileDetails" style="display:block;">
+      <div class="form-section">
+        <h3>Land Details</h3>
+        <div class="form-group">
+          <label>Survey Number:</label>
+          <input type="text" id="surveyNumber" name="surveyNumber" readonly>
+        </div>
+        <div class="form-group">
+          <label>Total Area:</label>
+          <input type="text" id="totalArea" name="totalArea" readonly>
+        </div>
+        <div class="form-group">
+          <label>Purpose:</label>
+          <select id="purpose" name="purpose" disabled>
+            <option value="">--Select Purpose--</option>
+            <option value="Farming">Farming</option>
+            <option value="Construction">Construction</option>
+            <option value="Commercial">Commercial</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Land Address</h3>
+        <div class="form-group">
+          <label>Address:</label>
+          <textarea id="landAddress" name="landAddress" rows="3" readonly></textarea>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Other Details</h3>
+        <div class="form-group">
+          <label>Remarks:</label>
+          <textarea id="remarks" name="remarks" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden field to store the action (accept/reject) -->
+    <input type="hidden" name="action" id="action" value="">
+
+    <!-- Accept & Reject Buttons -->
+    <div class="form-group d-flex justify-content-center gap-3 mt-4">
+      <button type="button" class="btn btn-success px-4" onclick="submitForm('accept')">
+        <i class="fas fa-check"></i> Accept
+      </button>
+      <button type="button" class="btn btn-danger px-4" onclick="submitForm('reject')">
+        <i class="fas fa-times"></i> Reject
+      </button>
+    </div>
+    
+  </form>
+</div>
+
+<script>
+  // When a file is selected, fetch its details via AJAX
+  document.getElementById('fileNo').addEventListener('change', function() {
+    var fileId = this.value;
+    if (fileId) {
+      fetch(`/api/get_file_details/${fileId}/`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('fileDetails').style.display = 'block';
+          document.getElementById('surveyNumber').value = data.survey_number || '';
+          document.getElementById('totalArea').value = data.area || '';
+          document.getElementById('purpose').value = data.purpose || '';
+          document.getElementById('landAddress').value = data.address || '';
+        })
+        .catch(error => console.error('Error:', error));
+    } else {
+      document.getElementById('fileDetails').style.display = 'none';
+    }
+  });
+
+  // Set the hidden action field and submit the form based on Accept/Reject choice
+  function submitForm(actionType) {
+    document.getElementById('action').value = actionType;
+    var confirmMessage = actionType === 'accept' ?
+      "Are you sure you want to accept this file and forward it?" :
+      "Are you sure you want to reject this file?";
+    if (confirm(confirmMessage)) {
+      document.getElementById('fileReviewForm').submit();
+    }
+  }
+</script>
+{% endblock %}

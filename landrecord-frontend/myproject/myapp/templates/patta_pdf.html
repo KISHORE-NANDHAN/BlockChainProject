@@ -1,0 +1,15 @@
+<div style="padding: 30px; font-family: sans-serif; font-size: 14px; line-height: 1.6;">
+    <h2 style="text-align: center;">Patta Certificate</h2>
+    <p><strong>Certificate No:</strong> PAT-{{ land_request.receipt_number }}</p>
+    <p><strong>Issued To:</strong> {{ land_request.full_name }}</p>
+    <p><strong>Survey No:</strong> {{ land_request.survey_number }}</p>
+    <p><strong>Area:</strong> {{ land_request.area }} sq. ft.</p>
+    <p><strong>Address:</strong> {{ land_request.address }}</p>
+    <p><strong>City:</strong> {{ land_request.city }} | <strong>State:</strong> {{ land_request.state }} | <strong>Pincode:</strong> {{ land_request.pincode }}</p>
+  
+    <p>This certifies that the above-mentioned land has been approved and registered under your name in accordance with government records.</p>
+  
+    <p>Date of Issue: {{ land_request.created_at|date:"F d, Y" }}</p>
+    <p style="margin-top: 40px;">Authorized by: <strong>MRO Office</strong></p>
+</div>
+  

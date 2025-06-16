@@ -1,0 +1,192 @@
+{% extends "base_eLand.html" %}
+{% load static %}
+
+{% block content %}
+<div class="inbox-page">
+
+  <!-- Toolbar Section -->
+  <div class="inbox-toolbar">
+    <button class="action-button" id="markReadButton">Mark as Read</button>
+    <button class="action-button" id="deleteButton">Delete</button>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="sent-actions">
+    <div style="display: flex; align-items: center;">
+      <input type="checkbox" class="inbox-checkbox">
+      <div style="margin-left: 10px;">
+        <label for="searchInput" style="margin-right: 10px;">Search Here...</label>
+        <select class="dropdown-select">
+          <option>Show All</option>
+        </select>
+        <select class="dropdown-select" style="margin-left: 5px;">
+          <option>Unread</option>
+          <option>Read</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inbox Table Section -->
+  <div class="sent-container">
+    <table class="sent-table">
+      <thead>
+        <tr>
+          <th width="30px"><input type="checkbox" class="sent-checkbox"></th>
+          <th width="120px">Comp. No.</th>
+          <th width="120px">File No.</th>
+          <th width="120px">Subject</th>
+          <th width="150px">Status</th>
+          <th width="150px">Currently With</th>
+          <th width="120px">Created at</th>
+          <th width="100px">Actions</th>
+          <th width="100px">History</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for msg in messages_list %}
+        <tr data-message-id="{{ msg.id }}">
+          <td><input type="checkbox" class="sent-checkbox"></td>
+          <td>{{ msg.receipt_number }}</td>
+          <td>{{ msg.file_no }}</td>
+          <td>{{ msg.subject }}</td>
+          <td>{{ msg.get_status_display }}</td>
+          <td>{{ msg.currently_with.designation|upper }}</td>
+          <td>{{ msg.created_at|date:"Y-m-d" }}</td>
+          <td>
+              {% if msg.receipt %}
+                <a href="{{ msg.receipt.url }}" target="_blank" class="btn btn-outline-primary btn-sm mb-1" title="View Receipt">
+                  📄 View Receipt
+                </a><br>
+              {% else %}
+                <span class="text-muted">No Receipt</span><br>
+              {% endif %}
+
+              {% if msg.document %}
+              <a href="{{ msg.document.url }}" target="_blank" class="btn btn-outline-primary btn-sm mb-1" title="View Document">
+                📄 Documents
+              </a><br>
+              {% else %}
+              <span class="text-muted">No Document</span><br>
+              {% endif %}
+
+              {% if msg.patta %}
+                <a href="{{ msg.patta.url }}" target="_blank" class="btn btn-outline-success btn-sm mt-1" title="Download Patta Certificate">
+                  🧾 Download Patta
+                </a>
+              {% endif %}
+            
+          <td>
+            <!-- Button to trigger the modal -->
+            <button class="btn btn-primary btn-sm view-history-btn" data-request-id="{{ msg.id }}">
+              View History
+            </button>
+          </td>
+        </tr>
+        <!-- Hidden History Block for This Row -->
+        <tr style="display:none;">
+          <td colspan="9">
+            <div class="hidden-history" id="history-{{ msg.id }}">
+              <h5>History of Request: {{ msg.comp_no }}</h5>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Sent By</th>
+                    <th>Sent To</th>
+                    <th>Date</th>
+                    <th>Remarks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for history_entry in msg.history.all|dictsortreversed:"timestamp" %}
+                  {% if history_entry.action != "rejected" or history_entry.from_user == request.user or history_entry.to_user == request.user %}
+                    <tr>
+                      <td>{{ history_entry.from_user.designation|default:"-"|upper }}</td>
+                      <td>{{ history_entry.to_user.designation|default:"-"|upper }}</td>
+                      <td>{{ history_entry.timestamp|date:"Y-m-d H:i" }}</td>
+                      <td>{{ history_entry.remarks|default:"No remarks" }}</td>
+                    </tr>
+                  {% endif %}
+                {% empty %}
+                  <tr>
+                    <td colspan="4" class="text-center">No history found</td>
+                  </tr>
+                {% endfor %}
+                
+                </tbody>
+              </table>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="9" class="text-center" style="padding: 20px;">No Messages Found</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer Section -->
+  <div class="sent-footer">
+    <div class="records-count">Total Messages: {{ messages_list|length }}</div>
+    <div class="pagination">
+      <button class="page-button">«</button>
+      <button class="page-button active">1</button>
+      <button class="page-button">»</button>
+      <span style="margin-left: 10px;">Page</span>
+      <select class="dropdown-select" style="margin-left: 5px;">
+        <option>10</option>
+        <option>20</option>
+        <option>50</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- Single Bootstrap Modal for History -->
+<div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="historyModalLabel">Request History</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modalHistoryContent">
+        <!-- History content will be injected here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS should already be included in your base template. If not, include it here: -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Using vanilla JS to update the modal content dynamically
+  document.addEventListener("DOMContentLoaded", function() {
+    const modal = new bootstrap.Modal(document.getElementById("historyModal"));
+    const modalContent = document.getElementById("modalHistoryContent");
+
+    document.querySelectorAll(".view-history-btn").forEach(button => {
+      button.addEventListener("click", function() {
+        // Get the request id from data attribute
+        const reqId = this.getAttribute("data-request-id");
+        // Get the hidden history content for that row
+        const historyDiv = document.getElementById("history-" + reqId);
+        if (historyDiv) {
+          // Copy the HTML content into the modal
+          modalContent.innerHTML = historyDiv.innerHTML;
+          // Update the modal title if needed
+          const compNo = this.closest("tr").querySelector("td:nth-child(2)").textContent;
+          document.getElementById("historyModalLabel").textContent = compNo;
+          // Show the modal
+          modal.show();
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}

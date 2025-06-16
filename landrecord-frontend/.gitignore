@@ -1,0 +1,58 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+
+# If your project uses PostgreSQL or MySQL, comment db.sqlite3 and add your DB-specific files if needed
+
+# Environment Variables
+.env
+*.env
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# VS Code settings
+.vscode/
+
+# Mac/Linux/Windows system files
+.DS_Store
+Thumbs.db
+
+# Pytest
+htmlcov/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# Pipenv
+Pipfile.lock
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# PyCharm
+.idea/
+
+# Local test/experiment folders
+test/
+tests/
