@@ -56,7 +56,7 @@ export CORE_PEER_TLS_ROOTCERT_FILE="${PWD}/organizations/peerOrganizations/org1.
 export CORE_PEER_MSPCONFIGPATH="${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp"
 export CORE_PEER_ADDRESS="localhost:7051"
 
-PACKAGE_ID=$(peer lifecycle chaincode queryinstalled | sed -n "s/.*Package ID: \(.*\), Label: ${CHAINCODE_LABEL}/\1/p")
+PACKAGE_ID=$(peer lifecycle chaincode queryinstalled | grep "$CHAINCODE_LABEL" | sed -E 's/^Package ID: (.*), Label:.*/\1/' | tr -d ' ')
 if [ -z "$PACKAGE_ID" ]; then
   echo "❌ Failed to retrieve PACKAGE_ID. Aborting."
   exit 1
@@ -65,7 +65,7 @@ fi
 echo "✅ PACKAGE_ID: ${PACKAGE_ID}"
 
 # Detect latest sequence
-LATEST_SEQUENCE=$(peer lifecycle chaincode querycommitted --channelID "$CHANNEL_NAME" --name "$CHAINCODE_NAME" 2>/dev/null | grep "Sequence:" | awk '{print $2}')
+LATEST_SEQUENCE=$(peer lifecycle chaincode querycommitted --channelID "$CHANNEL_NAME" --name "$CHAINCODE_NAME" 2>/dev/null | grep "Sequence:" | awk '{gsub(",", "", $2); print int($2)}')
 if [ -n "$LATEST_SEQUENCE" ]; then
   CHAINCODE_SEQUENCE=$((LATEST_SEQUENCE + 1))
   echo "🔁 Detected current sequence: $LATEST_SEQUENCE ➡️ Using next sequence: $CHAINCODE_SEQUENCE"
