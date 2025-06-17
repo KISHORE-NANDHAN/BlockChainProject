@@ -19,7 +19,7 @@ echo "📦 Deploying chaincode '$CHAINCODE_NAME' to Org1 and Org2..."
 echo "➕ Adding Org3 to the network..."
 if [ -d "addOrg3" ]; then
   cd addOrg3
-  ./addOrg3.sh up -c $CHANNEL_NAME -s couchdb
+  ./addOrg3.sh up -c $CHANNEL_NAME -ca -s couchdb
   cd ..
 else
   echo "❌ 'addOrg3' folder not found. Aborting."
