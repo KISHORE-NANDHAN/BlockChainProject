@@ -31,6 +31,7 @@ for i in 1 2 3; do
   echo "📥 Enrolling MSP for ${PEER_NAME}.${ORG_DOMAIN}..."
 
   # Enroll MSP
+  export FABRIC_CA_CLIENT_HOME=$PWD
   fabric-ca-client enroll -u https://${PEER_NAME}:${PEER_NAME}pw@${CA_HOST}:${CA_PORT} \
     --caname $CA_NAME \
     -M ${PEER_DIR}/msp \
@@ -43,6 +44,7 @@ for i in 1 2 3; do
   echo "🔐 Generating TLS cert for ${PEER_NAME}.${ORG_DOMAIN}..."
 
   # Enroll TLS
+  export FABRIC_CA_CLIENT_HOME=$PWD
   fabric-ca-client enroll -u https://${PEER_NAME}:${PEER_NAME}pw@${CA_HOST}:${CA_PORT} \
     --caname $CA_NAME \
     -M ${PEER_DIR}/tls \
@@ -58,6 +60,8 @@ for i in 1 2 3; do
     cp ${PEER_DIR}/tls/cacerts/* ${PEER_DIR}/tls/ca.crt
   else
     echo "❌ TLS CA cert not found in either tlscacerts or cacerts"
+    echo "📂 Listing contents of ${PEER_DIR}/tls:"
+    ls -R ${PEER_DIR}/tls
     exit 1
   fi
 
