@@ -12,31 +12,31 @@ if [ ! -f "$BLOCK_FILE" ]; then
   exit 1
 fi
 
-# Format: "OrgMSP|orgDomain|port"
+# Format: "OrgMSP|orgDomain|peerHostname|port"
 PEERS=(
-  "Org1MSP|org1.example.com|8051"
-  "Org1MSP|org1.example.com|22051"
-  "Org1MSP|org1.example.com|10051"
-  "Org2MSP|org2.example.com|21051"
-  "Org2MSP|org2.example.com|12051"
-  "Org2MSP|org2.example.com|13051"
-  "Org3MSP|org3.example.com|14051"
-  "Org3MSP|org3.example.com|15051"
-  "Org3MSP|org3.example.com|16051"
+  "Org1MSP|org1.example.com|peer1.org1.example.com|8051"
+  "Org1MSP|org1.example.com|peer2.org1.example.com|22051"
+  "Org1MSP|org1.example.com|peer3.org1.example.com|10051"
+  "Org2MSP|org2.example.com|peer1.org2.example.com|21051"
+  "Org2MSP|org2.example.com|peer2.org2.example.com|12051"
+  "Org2MSP|org2.example.com|peer3.org2.example.com|13051"
+  "Org3MSP|org3.example.com|peer1.org3.example.com|14051"
+  "Org3MSP|org3.example.com|peer2.org3.example.com|15051"
+  "Org3MSP|org3.example.com|peer3.org3.example.com|16051"
 )
 
 echo "🔗 Joining additional peers to channel '$CHANNEL_NAME'..."
 
 for PEER in "${PEERS[@]}"; do
-  IFS='|' read -r ORGMSP ORGDOMAIN PORT <<< "$PEER"
+  IFS='|' read -r ORGMSP ORGDOMAIN PEERHOST PORT <<< "$PEER"
 
   export CORE_PEER_LOCALMSPID=$ORGMSP
   export CORE_PEER_TLS_ENABLED=true
-  export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/${ORGDOMAIN}/peers/peer0.${ORGDOMAIN}/tls/ca.crt
+  export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/${ORGDOMAIN}/peers/${PEERHOST}/tls/ca.crt
   export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/${ORGDOMAIN}/users/Admin@${ORGDOMAIN}/msp
   export CORE_PEER_ADDRESS=localhost:${PORT}
 
-  echo "🔁 Joining $ORGMSP at $PORT..."
+  echo "🔁 Joining $PEERHOST to channel..."
   peer channel join -b "$BLOCK_FILE"
 done
 
