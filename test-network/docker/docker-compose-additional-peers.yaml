@@ -1,5 +1,7 @@
 version: '3.7'
 
+volumes: {}
+
 networks:
   test:
     external: true
@@ -7,7 +9,7 @@ networks:
 
 services:
 
-  # ORG1: peer1–3
+  # ORG1 Peers
   peer1.org1.example.com:
     container_name: peer1.org1.example.com
     extends:
@@ -22,10 +24,11 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org1.example.com:7051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:7051
       - CORE_PEER_LOCALMSPID=Org1MSP
-      - FABRIC_CFG_PATH=/etc/hyperledger/fabric 
+      - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - ./organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com:/etc/hyperledger/fabric
-       
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 8051:7051
 
@@ -34,7 +37,7 @@ services:
     extends:
       file: docker-base.yaml
       service: peer-base
-    environment:
+    environment: &org1_env
       - CORE_PEER_ID=peer2.org1.example.com
       - CORE_PEER_ADDRESS=peer2.org1.example.com:9051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
@@ -43,10 +46,11 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.org1.example.com:9051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:7051
       - CORE_PEER_LOCALMSPID=Org1MSP
-      - FABRIC_CFG_PATH=/etc/hyperledger/fabric 
+      - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - ./organizations/peerOrganizations/org1.example.com/peers/peer2.org1.example.com:/etc/hyperledger/fabric/peer
-       
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 22051:9051
 
@@ -64,15 +68,15 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer3.org1.example.com:10051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:7051
       - CORE_PEER_LOCALMSPID=Org1MSP
-      - FABRIC_CFG_PATH=/etc/hyperledger/fabric 
+      - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - ./organizations/peerOrganizations/org1.example.com/peers/peer3.org1.example.com:/etc/hyperledger/fabric/peer
-       
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 10051:10051
 
-  # ORG2 and ORG3 peers: same format, different ports and MSPs
-
+  # ORG2 Peers
   peer1.org2.example.com:
     container_name: peer1.org2.example.com
     extends:
@@ -87,10 +91,11 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org2.example.com:11051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org2.example.com:9051
       - CORE_PEER_LOCALMSPID=Org2MSP
-      - FABRIC_CFG_PATH=/etc/hyperledger/fabric 
+      - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - ./organizations/peerOrganizations/org2.example.com/peers/peer1.org2.example.com:/etc/hyperledger/fabric/peer
-       
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 21051:11051
 
@@ -108,10 +113,11 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.org2.example.com:12051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org2.example.com:9051
       - CORE_PEER_LOCALMSPID=Org2MSP
-      - FABRIC_CFG_PATH=/etc/hyperledger/fabric 
+      - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - ./organizations/peerOrganizations/org2.example.com/peers/peer2.org2.example.com:/etc/hyperledger/fabric/peer
-       
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer2.org2.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer2.org2.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer2.org2.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 12051:12051
 
@@ -129,13 +135,15 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer3.org2.example.com:13051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org2.example.com:9051
       - CORE_PEER_LOCALMSPID=Org2MSP
-      - FABRIC_CFG_PATH=/etc/hyperledger/fabric 
+      - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - ./organizations/peerOrganizations/org2.example.com/peers/peer3.org2.example.com:/etc/hyperledger/fabric/peer
-       
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer3.org2.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer3.org2.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer3.org2.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 13051:13051
 
+  # ORG3 Peers
   peer1.org3.example.com:
     container_name: peer1.org3.example.com
     extends:
@@ -150,10 +158,11 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org3.example.com:14051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org3.example.com:11051
       - CORE_PEER_LOCALMSPID=Org3MSP
-      - FABRIC_CFG_PATH=/etc/hyperledger/fabric 
+      - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - ./organizations/peerOrganizations/org3.example.com/peers/peer1.org3.example.com:/etc/hyperledger/fabric/peer
-       
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer1.org3.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer1.org3.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer1.org3.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 14051:14051
 
@@ -171,10 +180,11 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.org3.example.com:15051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org3.example.com:11051
       - CORE_PEER_LOCALMSPID=Org3MSP
-      - FABRIC_CFG_PATH=/etc/hyperledger/fabric 
+      - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - ./organizations/peerOrganizations/org3.example.com/peers/peer2.org3.example.com:/etc/hyperledger/fabric/peer
-       
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer2.org3.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer2.org3.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer2.org3.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 15051:15051
 
@@ -192,9 +202,10 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer3.org3.example.com:16051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org3.example.com:11051
       - CORE_PEER_LOCALMSPID=Org3MSP
-      - FABRIC_CFG_PATH=/etc/hyperledger/fabric 
+      - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - ./organizations/peerOrganizations/org3.example.com/peers/peer3.org3.example.com:/etc/hyperledger/fabric/peer
-       
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer3.org3.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer3.org3.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer3.org3.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 16051:16051
