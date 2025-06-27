@@ -10,16 +10,22 @@ CHAINCODE_LANG="go"
 echo "🔁 Bringing down any existing Fabric network (if running)..."
 ./network.sh down || echo "ℹ️ No existing network to shut down."
 
+echo "🧹 Cleaning old Org3 artifacts..."
+rm -rf ../organizations/peerOrganizations/revenue.gov.in
+rm -rf ../organizations/peerOrganizations/org3.example.com
+rm -f addOrg3/org3_update_in_envelope.pb
+
 echo "🚀 Starting Fabric network with Org1 and Org2..."
 ./network.sh up createChannel -ca -c $CHANNEL_NAME -s couchdb
 
-echo "📦 Deploying chaincode '$CHAINCODE_NAME' to Org1 and Org2..."
-./network.sh deployCC -ccn $CHAINCODE_NAME -ccp $CHAINCODE_PATH -ccl $CHAINCODE_LANG
+# echo "📦 Deploying chaincode '$CHAINCODE_NAME' to Org1 and Org2..."
+# ./network.sh deployCC -ccn $CHAINCODE_NAME -ccp $CHAINCODE_PATH -ccl $CHAINCODE_LANG
 
 echo "➕ Adding Org3 to the network..."
 if [ -d "addOrg3" ]; then
   cd addOrg3
-  ./addOrg3.sh up -c $CHANNEL_NAME -ca -s couchdb
+  ./addOrg3.sh generate -ca
+  ./addOrg3.sh up -c $CHANNEL_NAME -ca -s couchdb -verbose
   cd ..
 else
   echo "❌ 'addOrg3' folder not found. Aborting."

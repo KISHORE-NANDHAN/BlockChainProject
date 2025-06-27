@@ -10,8 +10,8 @@ PeerOrgs:
   # ---------------------------------------------------------------------------
   # Org3
   # ---------------------------------------------------------------------------
-  - Name: Org3
-    Domain: org3.example.com
+  - Name: REVENUE
+    Domain: revenue.gov.in
     EnableNodeOUs: true
     Template:
       Count: 1

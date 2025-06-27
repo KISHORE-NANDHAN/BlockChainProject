@@ -7,8 +7,8 @@ version: '3.7'
 
 volumes:
   orderer.example.com:
-  peer0.org1.example.com:
-  peer0.org2.example.com:
+  clerk.itda.gov.in:
+  project_officer.district.gov.in:
 
 networks:
   test:
@@ -58,8 +58,8 @@ services:
     networks:
       - test
 
-  peer0.org1.example.com:
-    container_name: peer0.org1.example.com
+  clerk.itda.gov.in:
+    container_name: clerk.itda.gov.in
     image: hyperledger/fabric-peer:latest
     labels:
       service: hyperledger-fabric
@@ -75,20 +75,20 @@ services:
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
       # Peer specific variables
-      - CORE_PEER_ID=peer0.org1.example.com
-      - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
+      - CORE_PEER_ID=clerk.itda.gov.in
+      - CORE_PEER_ADDRESS=clerk.itda.gov.in:7051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.org1.example.com:7052
+      - CORE_PEER_CHAINCODEADDRESS=clerk.itda.gov.in:7052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.example.com:7051
-      - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_PEER_GOSSIP_BOOTSTRAP=clerk.itda.gov.in:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=clerk.itda.gov.in:7051
+      - CORE_PEER_LOCALMSPID=ItdaMSP
       - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:17051
     volumes:
         - ${DOCKER_SOCK}:/host/var/run/docker.sock
-        - ../organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/fabric/msp
-        - ../organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/etc/hyperledger/fabric/tls
-        - peer0.org1.example.com:/var/hyperledger/production
+        - ../organizations/peerOrganizations/itda.gov.in/peers/clerk.itda.gov.in/msp:/etc/hyperledger/fabric/msp
+        - ../organizations/peerOrganizations/itda.gov.in/peers/clerk.itda.gov.in/tls:/etc/hyperledger/fabric/tls
+        - clerk.itda.gov.in:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
@@ -97,8 +97,8 @@ services:
     networks:
       - test
 
-  peer0.org2.example.com:
-    container_name: peer0.org2.example.com
+  project_officer.district.gov.in:
+    container_name: project_officer.district.gov.in
     image: hyperledger/fabric-peer:latest
     labels:
       service: hyperledger-fabric
@@ -114,20 +114,20 @@ services:
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
       # Peer specific variables
-      - CORE_PEER_ID=peer0.org2.example.com
-      - CORE_PEER_ADDRESS=peer0.org2.example.com:9051
+      - CORE_PEER_ID=project_officer.district.gov.in
+      - CORE_PEER_ADDRESS=project_officer.district.gov.in:9051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.org2.example.com:9052
+      - CORE_PEER_CHAINCODEADDRESS=project_officer.district.gov.in:9052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org2.example.com:9051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org2.example.com:9051
-      - CORE_PEER_LOCALMSPID=Org2MSP
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=project_officer.district.gov.in:9051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=project_officer.district.gov.in:9051
+      - CORE_PEER_LOCALMSPID=DistrictMSP
       - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:19051
     volumes:
         - ${DOCKER_SOCK}:/host/var/run/docker.sock
-        - ../organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp:/etc/hyperledger/fabric/msp
-        - ../organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls:/etc/hyperledger/fabric/tls
-        - peer0.org2.example.com:/var/hyperledger/production
+        - ../organizations/peerOrganizations/district.gov.in/peers/project_officer.district.gov.in/msp:/etc/hyperledger/fabric/msp
+        - ../organizations/peerOrganizations/district.gov.in/peers/project_officer.district.gov.in/tls:/etc/hyperledger/fabric/tls
+        - project_officer.district.gov.in:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
@@ -154,7 +154,7 @@ services:
         - ../organizations:/opt/gopath/src/github.com/hyperledger/fabric/peer/organizations
         - ../scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
     depends_on:
-      - peer0.org1.example.com
-      - peer0.org2.example.com
+      - clerk.itda.gov.in
+      - project_officer.district.gov.in
     networks:
       - test

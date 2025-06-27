@@ -26,9 +26,9 @@ services:
       - CORE_PEER_LOCALMSPID=Org1MSP
       - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/fabric/peer/msp
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/fabric/peer/tls
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
+      - ../organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - ../organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - ../organizations/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 8051:7051
 
@@ -48,9 +48,9 @@ services:
       - CORE_PEER_LOCALMSPID=Org1MSP
       - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/msp:/etc/hyperledger/fabric/peer/msp
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/tls:/etc/hyperledger/fabric/peer/tls
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
+      - ../organizations/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - ../organizations/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - ../organizations/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 22051:9051
 
@@ -70,9 +70,9 @@ services:
       - CORE_PEER_LOCALMSPID=Org1MSP
       - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/msp:/etc/hyperledger/fabric/peer/msp
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/tls:/etc/hyperledger/fabric/peer/tls
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
+      - ../organizations/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - ../organizations/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - ../organizations/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 10051:10051
 
@@ -93,9 +93,9 @@ services:
       - CORE_PEER_LOCALMSPID=Org2MSP
       - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/msp:/etc/hyperledger/fabric/peer/msp
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls:/etc/hyperledger/fabric/peer/tls
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
+      - ../organizations/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - ../organizations/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - ../organizations/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 21051:11051
 
@@ -115,9 +115,9 @@ services:
       - CORE_PEER_LOCALMSPID=Org2MSP
       - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer2.org2.example.com/msp:/etc/hyperledger/fabric/peer/msp
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer2.org2.example.com/tls:/etc/hyperledger/fabric/peer/tls
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer2.org2.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
+      - ../organizations/peerOrganizations/org2.example.com/peers/peer2.org2.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - ../organizations/peerOrganizations/org2.example.com/peers/peer2.org2.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - ../organizations/peerOrganizations/org2.example.com/peers/peer2.org2.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 12051:12051
 
@@ -137,9 +137,9 @@ services:
       - CORE_PEER_LOCALMSPID=Org2MSP
       - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer3.org2.example.com/msp:/etc/hyperledger/fabric/peer/msp
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer3.org2.example.com/tls:/etc/hyperledger/fabric/peer/tls
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer3.org2.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
+      - ../organizations/peerOrganizations/org2.example.com/peers/peer3.org2.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - ../organizations/peerOrganizations/org2.example.com/peers/peer3.org2.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - ../organizations/peerOrganizations/org2.example.com/peers/peer3.org2.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 13051:13051
 
@@ -160,9 +160,9 @@ services:
       - CORE_PEER_LOCALMSPID=Org3MSP
       - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer1.org3.example.com/msp:/etc/hyperledger/fabric/peer/msp
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer1.org3.example.com/tls:/etc/hyperledger/fabric/peer/tls
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer1.org3.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
+      - ../organizations/peerOrganizations/org3.example.com/peers/peer1.org3.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - ../organizations/peerOrganizations/org3.example.com/peers/peer1.org3.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - ../organizations/peerOrganizations/org3.example.com/peers/peer1.org3.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 14051:14051
 
@@ -182,9 +182,9 @@ services:
       - CORE_PEER_LOCALMSPID=Org3MSP
       - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer2.org3.example.com/msp:/etc/hyperledger/fabric/peer/msp
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer2.org3.example.com/tls:/etc/hyperledger/fabric/peer/tls
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer2.org3.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
+      - ../organizations/peerOrganizations/org3.example.com/peers/peer2.org3.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - ../organizations/peerOrganizations/org3.example.com/peers/peer2.org3.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - ../organizations/peerOrganizations/org3.example.com/peers/peer2.org3.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 15051:15051
 
@@ -204,8 +204,8 @@ services:
       - CORE_PEER_LOCALMSPID=Org3MSP
       - FABRIC_CFG_PATH=/etc/hyperledger/fabric/peer
     volumes:
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer3.org3.example.com/msp:/etc/hyperledger/fabric/peer/msp
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer3.org3.example.com/tls:/etc/hyperledger/fabric/peer/tls
-      - /home/kishorenandhan/go/src/github.com/KISHORE-NANDHAN/fabric-samples/test-network/organizations/peerOrganizations/org3.example.com/peers/peer3.org3.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
+      - ../organizations/peerOrganizations/org3.example.com/peers/peer3.org3.example.com/msp:/etc/hyperledger/fabric/peer/msp
+      - ../organizations/peerOrganizations/org3.example.com/peers/peer3.org3.example.com/tls:/etc/hyperledger/fabric/peer/tls
+      - ../organizations/peerOrganizations/org3.example.com/peers/peer3.org3.example.com/core.yaml:/etc/hyperledger/fabric/peer/core.yaml
     ports:
       - 16051:16051
